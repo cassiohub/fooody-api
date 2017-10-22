@@ -19,4 +19,7 @@ router.route('/:ingredientId')
   .put(IngredientSchema.put, IngredientController.put)
   .delete(IngredientSchema.delete, IngredientController.delete);
 
+router.route('/:ingredientId/:status')
+  .get(IngredientSchema.status, IngredientController.status);
+
 module.exports = router;

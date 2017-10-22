@@ -61,7 +61,6 @@ class IngredientController {
         res.status(204).send({ success: true });
       })
       .catch((err) => {
-        console.log(err);
         Logger.throw(res, '893748534', err);
       });
   }
@@ -73,6 +72,26 @@ class IngredientController {
     };
 
     IngredientService.delete(ingredient)
+      .then((ingredient) => {
+        if (!ingredient) {
+          res.status(404).send({ code: '89475394593', message: req.__('api.ingredient.notFound') });
+          return;
+        }
+        res.status(204).send({ success: true });
+      })
+      .catch((err) => {
+        Logger.throw(res, '8973539459', err);
+      });
+  }
+
+  static status(req, res) {
+    const ingredient = {
+      ingredientId: req.params.ingredientId,
+      status: req.params.status,
+      userId: req.userId,
+    };
+
+    IngredientService.status(ingredient)
       .then((ingredient) => {
         if (!ingredient) {
           res.status(404).send({ code: '89475394593', message: req.__('api.ingredient.notFound') });

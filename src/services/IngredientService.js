@@ -48,6 +48,10 @@ class IngredientService {
   static delete(data) {
     return IngredientModel.delete(data);
   }
+
+  static status(data) {
+    return IngredientModel.status(data);
+  }
 }
 
 module.exports = IngredientService;

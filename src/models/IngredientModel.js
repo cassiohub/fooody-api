@@ -64,6 +64,17 @@ class IngredientModel {
         enabled: 0,
       });
   }
+
+  static status(data) {
+    const enabled = data.status === 'enabled' ? 1 : 0;
+    return knex
+      .from(USER_INGREDIENT)
+      .where(`${USER_INGREDIENT}.ingredientId`, data.ingredientId)
+      .andWhere(`${USER_INGREDIENT}.userId`, data.userId)
+      .update({
+        enabled,
+      });
+  }
 }
 
 module.exports = IngredientModel;

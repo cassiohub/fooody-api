@@ -39,7 +39,6 @@ class IngredientSchema extends RouteValidator {
         name: Joi.string(),
         quantity: Joi.number().integer().min(0),
         unity: Joi.number().integer().min(0),
-        enabled: Joi.number().integer().allow(0, 1, null),
       }),
     };
 
@@ -50,6 +49,17 @@ class IngredientSchema extends RouteValidator {
     const schema = {
       params: Joi.object().keys({
         ingredientId: Joi.number().integer().required(),
+      }),
+    };
+
+    return this.validate(schema);
+  }
+
+  static get status() {
+    const schema = {
+      params: Joi.object().keys({
+        ingredientId: Joi.number().integer().required(),
+        status: Joi.string().allow('enabled', 'disabled'),
       }),
     };
 
