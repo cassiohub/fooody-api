@@ -38,7 +38,6 @@ class IngredientController {
         res.status(201).send({ success: true, id });
       })
       .catch((err) => {
-        console.log(err);
         return Logger.throw(res, '893872342342', err);
       });
   }
@@ -62,6 +61,7 @@ class IngredientController {
         res.status(204).send({ success: true });
       })
       .catch((err) => {
+        console.log(err);
         Logger.throw(res, '893748534', err);
       });
   }
