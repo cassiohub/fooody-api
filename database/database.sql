@@ -33,12 +33,7 @@ CREATE TABLE IF NOT EXISTS `fooody`.`ingredient` (
   `name` VARCHAR(255) NOT NULL,
   `quantity` INT(11) NULL,
   `unity` BIGINT(11) NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_ingredient_unity`
-    FOREIGN KEY (`id`)
-    REFERENCES `fooody`.`unity` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `fooody`.`useringredientxref` (

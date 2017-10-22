@@ -1,6 +1,7 @@
-const http = require('http');
 const cheerio = require('cheerio');
 const fakeUa = require('fake-useragent');
+
+const BaseModel = require('./BaseModel');
 
 const BASE_URL = 'ingredientesdecasa.com.br';
 const BASE_OPTIONS = {
@@ -15,24 +16,7 @@ const sanatizeImage = (image) => {
   return image.replace(/(-[0-9]+x[0-9]+)/g, '');
 };
 
-class DeCasaModel {
-  static get(options) {
-    return new Promise((resolve, reject) => {
-      const req = http.request(options, (res) => {
-        const chunks = [];
-        res
-          .on('data', chunk => chunks.push(chunk))
-          .on('end', () => {
-            const body = Buffer.concat(chunks);
-            resolve(body.toString());
-          })
-          .on('error', err => reject(err));
-      });
-
-      req.end();
-    });
-  }
-
+class DeCasaModel extends BaseModel {
   static cookOptions(ingredients, offset = 0) {
     const searchString = (ingredients instanceof Array) ? ingredients.join(',') : ingredients;
     return Object.assign(BASE_OPTIONS, {

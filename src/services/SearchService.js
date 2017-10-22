@@ -1,10 +1,13 @@
-const DeCasaModel = require('../models/DeCasaModel');
+const DeCasaModel = require('../models/RecipeSource/DeCasaModel');
+const TudoGostosoModel = require('../models/RecipeSource/TudoGostosoModel');
 
 class SearchService {
   static mapSources(source) {
     switch (source.toLocaleLowerCase()) {
       case 'decasa':
         return DeCasaModel;
+      case 'tudogostoso':
+        return TudoGostosoModel;
       default:
         return null;
     }
