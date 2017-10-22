@@ -77,7 +77,7 @@ class TudoGostosoModel extends BaseModel {
         .then((responses) => {
           return resolve(responses.map((d, index) => {
             return Object.assign(content[index], {
-              details: this.parseDetails(d),
+              details: null, //this.parseDetails(d),
             });
           }));
         })
