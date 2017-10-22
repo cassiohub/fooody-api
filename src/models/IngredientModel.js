@@ -12,7 +12,6 @@ class IngredientModel {
   }
 
   static get(data) {
-    console.log(data);
     return knex
       .from(INGREDIENT)
       .innerJoin(USER_INGREDIENT, `${USER_INGREDIENT}.ingredientId`, `${INGREDIENT}.id`)
@@ -69,7 +68,13 @@ class IngredientModel {
   }
 
   static status(data) {
-    const enabled = data.status === 'enabled' ? 1 : 0;
+    let enabled;
+    if (data.status === 'enabled') {
+      enabled = 1;
+    } else if (data.status === 'disabled') {
+      enabled = 0;
+    }
+
     return knex
       .from(USER_INGREDIENT)
       .where(`${USER_INGREDIENT}.ingredientId`, data.ingredientId)
