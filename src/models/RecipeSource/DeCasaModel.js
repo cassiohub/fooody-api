@@ -20,7 +20,7 @@ class DeCasaModel extends BaseModel {
   static cookOptions(ingredients, offset = 0) {
     const searchString = (ingredients instanceof Array) ? ingredients.join(',') : ingredients;
     return Object.assign(BASE_OPTIONS, {
-      path: `/pesquisar.php?ingredientes=${searchString}&offset=${offset}`,
+      path: `/pesquisar.php?ingredientes=${searchString}&offset=${offset * 30}`,
     });
   }
 
@@ -48,7 +48,7 @@ class DeCasaModel extends BaseModel {
         const link = elem.children[7].children[1].attribs.href;
 
         receitas.push({
-          image, title, requestedIngredients, link,
+          image, title, requestedIngredients, link, source: 'decasa',
         });
       }
     });

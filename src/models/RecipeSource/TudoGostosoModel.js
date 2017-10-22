@@ -24,6 +24,12 @@ class TudoGostosoModel extends BaseModel {
     });
   }
 
+  static cookDetailsOptions(item) {
+    return Object.assign(BASE_OPTIONS, {
+      path: `/${item.link}`,
+    });
+  }
+
   static parseList(html) {
     const $ = cheerio.load(html);
     const $lista = $('.listing.box').find('li.box-hover');
@@ -36,26 +42,44 @@ class TudoGostosoModel extends BaseModel {
         const title = elem.children[1].children[3].children[1].children[0].data;
         const requestedIngredients = [];
         const link = elem.children.filter(c => c.name === 'a')[0].attribs.href;
-        const details = {
-          ingredients: [],
-          originalLink: `http://${BASE_URL}${link}`,
-        };
 
         receitas.push({
-          image, title, requestedIngredients, link, details,
+          image, title, requestedIngredients, link, source: 'tudogostoso',
         });
       }
     });
     return receitas;
   }
 
+  static parseDetails(html) {
+    const $ = cheerio.load(html);
+    const $details = $('.ingredients-box #info-user ul').contents();
+    const result = {};
+
+    result.ingredients = Object.keys($details).forEach((index) => {
+      const elem = $details[index];
+      return elem.children[0].children[0].data;
+    });
+
+    return result;
+  }
+
   static list(ingredients, offset) {
+    let content;
     const options = this.cookOptions(ingredients, offset);
 
     return new Promise((resolve, reject) => {
       this.get(options)
         .then((response) => {
-          return resolve(this.parseList(response));
+          content = this.parseList(response);
+          return Promise.all(content.map(item => this.get(this.cookDetailsOptions(item))));
+        })
+        .then((responses) => {
+          return resolve(responses.map((d, index) => {
+            return Object.assign(content[index], {
+              details: this.parseDetails(d),
+            });
+          }));
         })
         .catch(err => reject(err));
     });
