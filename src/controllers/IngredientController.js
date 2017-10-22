@@ -14,7 +14,11 @@ class IngredientController {
   }
 
   static get(req, res) {
-    IngredientService.get(req.params)
+    const ingredient = {
+      ingredientId: req.params.ingredientId,
+      userId: req.userId,
+    };
+    IngredientService.get(ingredient)
       .then((ingredient) => {
         if (!ingredient) {
           res.status(404).send({ code: '89387539485', message: req.__('api.ingredient.notFound') });

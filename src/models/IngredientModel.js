@@ -12,6 +12,7 @@ class IngredientModel {
   }
 
   static get(data) {
+    console.log(data);
     return knex
       .from(INGREDIENT)
       .innerJoin(USER_INGREDIENT, `${USER_INGREDIENT}.ingredientId`, `${INGREDIENT}.id`)
