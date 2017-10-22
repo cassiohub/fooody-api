@@ -23,6 +23,7 @@ class IngredientController {
         res.send(ingredient);
       })
       .catch((err) => {
+        console.log(err);
         Logger.throw(res, '89387589345', err);
       });
   }
