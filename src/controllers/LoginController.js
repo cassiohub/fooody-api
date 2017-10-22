@@ -39,6 +39,7 @@ class LoginController {
           case ERROR_TYPE.PASSWORD.INVALID:
             return res.status(403).send({ code: '327235844', message: req.__('api.user.invalidPassword') });
           default:
+            console.log(JSON.stringify(err));
             return Logger.throw(res, '3272358416', err);
         }
       });
