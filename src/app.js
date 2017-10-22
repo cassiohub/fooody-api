@@ -14,6 +14,7 @@ const loginRoutes = require('./routes/login');
 const searchRoutes = require('./routes/search');
 const ingredientRoutes = require('./routes/ingredient');
 const favoriteRoutes = require('./routes/favorite');
+const foodsRoutes = require('./routes/food');
 
 /* Express initialization */
 const app = express();
@@ -44,6 +45,7 @@ app.use('/login', loginRoutes);
 app.use('/search', searchRoutes);
 app.use('/ingredients', ingredientRoutes);
 app.use('/favorites', favoriteRoutes);
+app.use('/foods', foodsRoutes);
 
 /* Log errors */
 LoggerConfig.expressError(app);
