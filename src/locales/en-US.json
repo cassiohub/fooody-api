@@ -1,0 +1,9 @@
+{
+  "helpers.logger.throw": "Internal server failure",
+  "cron.everySecond.tick": "You will see this message every second",
+  
+  "api.user.notFound": "User not found",
+  "api.user.invalidPassword": "Invalid Credentials",
+  "api.ingredient.notFound": "Ingredient not found",
+  "api.favorite.notFound": "Favorite not found"
+}
