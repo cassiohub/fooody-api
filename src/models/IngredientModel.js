@@ -14,7 +14,9 @@ class IngredientModel {
   static get(data) {
     return knex
       .from(INGREDIENT)
-      .where(`${INGREDIENT}.id`, data.ingredientId);
+      .innerJoin(USER_INGREDIENT, `${USER_INGREDIENT}.ingredientId`, `${INGREDIENT}.id`)
+      .where(`${INGREDIENT}.id`, data.ingredientId)
+      .andWhere(`${USER_INGREDIENT}.userId`, data.userId);
   }
 
   static post(data) {
