@@ -1,5 +1,4 @@
 const { knex } = require('../config/db');
-const userType = require('../types/user');
 
 const INGREDIENT = 'ingredient';
 const USER_INGREDIENT = 'useringredientxref';
@@ -9,8 +8,7 @@ class IngredientModel {
     return knex
       .from(USER_INGREDIENT)
       .innerJoin(INGREDIENT, `${USER_INGREDIENT}.ingredientId`, `${INGREDIENT}.id`)
-      .where(`${USER_INGREDIENT}.userId`, data.userId)
-      .andWhere(`${USER_INGREDIENT}.enabled`, 1);
+      .where(`${USER_INGREDIENT}.userId`, data.userId);
   }
 
   static get(data) {
@@ -30,8 +28,6 @@ class IngredientModel {
         })
         .returning('id')
         .then((ingredientId) => {
-          console.log(ingredientId);
-          console.log(data.userId);
           return knex
             .from(USER_INGREDIENT)
             .insert({
