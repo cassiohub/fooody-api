@@ -40,11 +40,11 @@ class TudoGostosoModel extends BaseModel {
       if (elem.type === 'tag') {
         const image = sanatizeImage(elem.children[1].children[1].children[1].attribs.src);
         const title = elem.children[1].children[3].children[1].children[0].data;
-        const requestedIngredients = [];
+        // const requestedIngredients = [];
         const link = elem.children.filter(c => c.name === 'a')[0].attribs.href;
 
         receitas.push({
-          image, title, requestedIngredients, link, source: 'tudogostoso',
+          image, title, link, source: 'tudogostoso',
         });
       }
     });
@@ -56,10 +56,10 @@ class TudoGostosoModel extends BaseModel {
     const $details = $('.ingredients-box #info-user ul').contents();
     const result = {};
 
-    result.ingredients = Object.keys($details).forEach((index) => {
+    result.ingredients = Object.keys($details).map((index) => {
       const elem = $details[index];
-      return elem.children[0].children[0].data;
-    });
+      return (elem.type === 'tag') ? elem.children[0].children[0].data : null;
+    }).filter(r => r);
 
     return result;
   }
@@ -77,7 +77,7 @@ class TudoGostosoModel extends BaseModel {
         .then((responses) => {
           return resolve(responses.map((d, index) => {
             return Object.assign(content[index], {
-              details: null, //this.parseDetails(d),
+              details: this.parseDetails(d),
             });
           }));
         })

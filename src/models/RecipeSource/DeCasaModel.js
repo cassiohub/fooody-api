@@ -44,11 +44,11 @@ class DeCasaModel extends BaseModel {
       ) {
         const image = sanatizeImage(elem.children[3].children[1].attribs.src);
         const title = elem.children[5].children[1].children[0].data;
-        const requestedIngredients = elem.children[5].children[3].children.filter(c => c.name === 'span').map(i => i.children[0].data);
+        // const requestedIngredients = elem.children[5].children[3].children.filter(c => c.name === 'span').map(i => i.children[0].data);
         const link = elem.children[7].children[1].attribs.href;
 
         receitas.push({
-          image, title, requestedIngredients, link, source: 'decasa',
+          image, title, link, source: 'decasa',
         });
       }
     });
