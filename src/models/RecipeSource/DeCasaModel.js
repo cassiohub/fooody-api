@@ -86,9 +86,7 @@ class DeCasaModel extends BaseModel {
         })
         .then((responses) => {
           return resolve(responses.map((d, index) => {
-            return Object.assign(content[index], {
-              details: this.parseDetails(d),
-            });
+            return Object.assign(content[index], this.parseDetails(d));
           }));
         })
         .catch(err => reject(err));

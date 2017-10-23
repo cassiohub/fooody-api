@@ -76,8 +76,10 @@ class TudoGostosoModel extends BaseModel {
         })
         .then((responses) => {
           return resolve(responses.map((d, index) => {
+            const { ingredients } = this.parseDetails(d);
             return Object.assign(content[index], {
-              details: this.parseDetails(d),
+              ingredients,
+              originalLink: `http://${BASE_URL}${content[index].link}`,
             });
           }));
         })
