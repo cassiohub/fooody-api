@@ -4,6 +4,7 @@
   
   "api.user.notFound": "User not found",
   "api.user.invalidPassword": "Invalid Credentials",
+  "api.user.notAuthorized": "Not Authorized",
   "api.ingredient.notFound": "Ingredient not found",
   "api.favorite.notFound": "Favorite not found"
 }

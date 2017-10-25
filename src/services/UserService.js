@@ -36,7 +36,20 @@ class UserService {
       });
   }
 
-  static getByUsername(data) {
+  static getFavorites(data) {
+    return UserModel.getFavorites(data)
+      .then((favorites) => {
+        return favorites.length ? favorites.map((fav) => {
+          return {
+            name: fav.name,
+            link: fav.link,
+            enabled: fav.enabled,
+          };
+        }) : [];
+      });
+  }
+
+  static getByUsername(data, hidePassword) {
     return UserModel.getByUsername(data)
       .then(([user]) => {
         if (user === undefined) {
@@ -46,15 +59,21 @@ class UserService {
         const result = {
           id: user.id,
           username: user.username,
-          password: user.password,
           name: user.name,
         };
-        return result;
+        return hidePassword ? result : Object.assign(result, { password: user.password });
       });
   }
 
   static post(data) {
-    return UserModel.post(data);
+    const { username, name, password } = data;
+    const user = {
+      username,
+      name,
+      password: bcrypt.hashSync(password),
+    };
+
+    return UserModel.post(user);
   }
 
   static put(data) {

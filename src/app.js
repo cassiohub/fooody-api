@@ -10,6 +10,7 @@ const compression = require('compression');
 const i18n = require('./config/i18n');
 
 /* Routes */
+const userRoutes = require('./routes/user');
 const loginRoutes = require('./routes/login');
 const searchRoutes = require('./routes/search');
 const ingredientRoutes = require('./routes/ingredient');
@@ -41,6 +42,7 @@ app.get('/', (req, res) => {
 });
 
 /* Instatiate routes */
+app.use('/users', userRoutes);
 app.use('/login', loginRoutes);
 app.use('/search', searchRoutes);
 app.use('/ingredients', ingredientRoutes);

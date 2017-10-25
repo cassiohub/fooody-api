@@ -1,22 +1,25 @@
 const express = require('express');
+
+const AuthMiddleware = require('../middlewares/Auth');
 const UserController = require('../controllers/UserController');
 const UserSchema = require('../routes/schemas/UserSchema');
 
 const router = express.Router({ mergeParams: true });
 
-/* GET /user */
-router.get('/', UserSchema.list, UserController.list);
+/* GET /users/me */
+router.get('/me', AuthMiddleware.hasCredentials, AuthMiddleware.identifyUser, UserController.get);
 
-/* GET /user/:userId */
-router.get('/:userId', UserSchema.get, UserController.get);
+/* GET /users/:username */
+router.get('/:username', UserSchema.getByUsername, UserController.getByUsername);
 
-/* POST /user */
+/* GET /users/:username/favorites */
+router.get('/:username/favorites', AuthMiddleware.hasCredentials, AuthMiddleware.identifyUser, UserSchema.getByUsername, UserController.getFavorites);
+
+/* POST /users */
 router.post('/', UserSchema.post, UserController.post);
 
 /* PUT /user/:userId */
-router.put('/:userId', UserSchema.put, UserController.put);
-
-/* DELETE /user/:userId */
-router.delete('/:userId', UserSchema.delete, UserController.delete);
+router.put('/:userId', AuthMiddleware.hasCredentials, AuthMiddleware.identifyUser, UserSchema.put, UserController.put);
 
 module.exports = router;
+

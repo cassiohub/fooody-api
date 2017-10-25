@@ -2,6 +2,7 @@ const { knex } = require('../config/db');
 const userType = require('../types/user');
 
 const USER = 'user';
+const FAVORITE = 'favorite';
 
 class UserModel {
   static list() {
@@ -21,6 +22,13 @@ class UserModel {
       .where(`${USER}.username`, data.username);
   }
 
+  static getFavorites(data) {
+    return knex
+      .from(FAVORITE)
+      .where(`${FAVORITE}.userId`, data.userId)
+      .where(`${FAVORITE}.enabled`, 1);
+  }
+
   static post(data) {
     return knex
       .from(USER)
@@ -33,6 +41,9 @@ class UserModel {
 
     if (data.name) {
       query.update('name', data.name);
+    }
+    if (data.username) {
+      query.update('username', data.username);
     }
 
     query.where(`${USER}.id`, data.userId);
