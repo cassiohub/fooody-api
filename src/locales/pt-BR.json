@@ -5,6 +5,8 @@
   "api.user.notFound": "Usuário não encontrado",
   "api.user.invalidPassword": "Credenciais Invalidas",
   "api.user.notAuthorized": "Não Autorizado",
+  "api.user.emailTaken": "Email já cadastrado",
+  "api.user.usernameTaken": "Usuário já cadastrado",
   "api.ingredient.notFound": "Ingrediente não encontrado",
   "api.favorite.notFound": "Favorito não encontrado"
 }

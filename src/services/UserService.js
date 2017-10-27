@@ -15,6 +15,7 @@ class UserService {
           id: user.id,
           username: user.username,
           name: user.name,
+          email: user.email,
         }));
         return result;
       });
@@ -31,6 +32,7 @@ class UserService {
           id: user.id,
           username: user.username,
           name: user.name,
+          email: user.email,
         };
         return result;
       });
@@ -60,16 +62,40 @@ class UserService {
           id: user.id,
           username: user.username,
           name: user.name,
+          email: user.email,
+        };
+        return hidePassword ? result : Object.assign(result, { password: user.password });
+      });
+  }
+
+  static getByEmail(data, hidePassword) {
+    return UserModel.getByEmail(data)
+      .then(([user]) => {
+        if (user === undefined) {
+          return null;
+        }
+
+        const result = {
+          id: user.id,
+          username: user.username,
+          name: user.name,
+          email: user.email,
         };
         return hidePassword ? result : Object.assign(result, { password: user.password });
       });
   }
 
   static post(data) {
-    const { username, name, password } = data;
+    const {
+      username,
+      name,
+      password,
+      email,
+    } = data;
     const user = {
       username,
       name,
+      email,
       password: bcrypt.hashSync(password),
     };
 

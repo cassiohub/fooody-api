@@ -22,6 +22,16 @@ class UserSchema extends RouteValidator {
     return this.validate(schema);
   }
 
+  static get getByEmail() {
+    const schema = {
+      params: Joi.object().keys({
+        userEmail: Joi.string().email().required(),
+      }),
+    };
+
+    return this.validate(schema);
+  }
+
   static get list() {
     const schema = {};
 
@@ -34,6 +44,7 @@ class UserSchema extends RouteValidator {
         username: Joi.string().required(),
         name: Joi.string().required(),
         password: Joi.string().required(),
+        email: Joi.string().email().required(),
       }),
     };
 
@@ -48,6 +59,7 @@ class UserSchema extends RouteValidator {
       body: Joi.object().keys({
         name: Joi.string().min(3),
         username: Joi.string().min(3),
+        email: Joi.string().email(),
       }),
     };
 

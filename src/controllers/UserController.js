@@ -41,6 +41,20 @@ class UserController {
       });
   }
 
+  static getByEmail(req, res) {
+    UserService.getByEmail(req.params, true)
+      .then((user) => {
+        if (!user) {
+          res.send({ success: false, code: '834923422', message: req.__('api.user.notFound') });
+          return;
+        }
+        res.send({ user });
+      })
+      .catch((err) => {
+        Logger.throw(res, '6001059324', err);
+      });
+  }
+
   static getFavorites(req, res) {
     UserService.getFavorites({ userId: req.userId })
       .then((favorites) => {
@@ -64,10 +78,11 @@ class UserController {
   static put(req, res) {
     const data = {
       userId: req.params.userId,
-      username: req.params.username,
+      username: req.body.username,
       name: req.body.name,
+      email: req.body.email,
     };
-    console.log(req.userId);
+
     if (req.params.userId === req.userId) {
       return UserService.put(data)
         .then((user) => {
@@ -77,7 +92,12 @@ class UserController {
           return res.send({ success: true });
         })
         .catch((err) => {
-          Logger.throw(res, '5768905470', err);
+          if (err.code === 'ER_DUP_ENTRY') {
+            return (err.message.indexOf('email')) !== -1 ?
+              res.send({ success: false, code: '1238123981', message: req.__('api.user.emailTaken') }) :
+              res.send({ success: false, code: '1238123981', message: req.__('api.user.usernameTaken') });
+          }
+          return Logger.throw(res, '5768905470', err);
         });
     }
     return res.status(401).send({ success: false, code: '34829342', message: req.__('api.user.notAuthorized') });

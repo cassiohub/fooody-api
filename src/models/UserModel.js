@@ -22,6 +22,12 @@ class UserModel {
       .where(`${USER}.username`, data.username);
   }
 
+  static getByEmail(data) {
+    return knex
+      .from(USER)
+      .where(`${USER}.email`, data.userEmail);
+  }
+
   static getFavorites(data) {
     return knex
       .from(FAVORITE)
@@ -44,6 +50,12 @@ class UserModel {
     }
     if (data.username) {
       query.update('username', data.username);
+    }
+    if (data.email) {
+      query.update('email', data.email);
+    }
+    if (data.password) {
+      query.update('password', data.password);
     }
 
     query.where(`${USER}.id`, data.userId);

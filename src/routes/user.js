@@ -9,6 +9,9 @@ const router = express.Router({ mergeParams: true });
 /* GET /users/me */
 router.get('/me', AuthMiddleware.hasCredentials, AuthMiddleware.identifyUser, UserController.get);
 
+/* GET /users/email/:userEmail */
+router.get('/email/:userEmail', UserSchema.getByEmail, UserController.getByEmail);
+
 /* GET /users/:username */
 router.get('/:username', UserSchema.getByUsername, UserController.getByUsername);
 
