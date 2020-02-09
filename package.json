@@ -1,7 +1,6 @@
 {
-  "name": "nodejs-seed-project",
-  "version": "1.1.0",
-  "description": "Seed project created to serve as a starting point for new projects, suggesting some patterns, dependencies/pacakges and style guide.",
+  "name": "fooody-api",
+  "version": "1.0.0",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
@@ -12,20 +11,7 @@
     "lint": "eslint src test || exit 0",
     "cover": "nyc report --reporter=text-lcov | coveralls"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/4alltecnologia/node-es6-seed"
-  },
-  "keywords": [
-    "seed",
-    "project",
-    "4all",
-    "node",
-    "pm2",
-    "i18n",
-    "knex"
-  ],
-  "author": "4All Tecnologia EPP",
+  "author": "Cassio Hubner",
   "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
